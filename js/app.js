@@ -3,7 +3,7 @@
 // ============================================
 
 
-let baseCards = ['1', '2', '3', '4','5','6','7','8'];
+let baseCards = ['1', '2', '3', '4', '5', '6', '7', '8'];
 
 let possibleCards = baseCards.concat(baseCards); // duplicate array items to make pairs
 
@@ -28,9 +28,9 @@ let t;
 
 
 const showStar = ['<li><i class="fa fa-star"></i></li><li><i class="fa fa-star-o"></i></li><li><i class="fa fa-star-o"></i></li>',  // 1 star
-                  '<li><i class="fa fa-star"></i></li><li><i class="fa fa-star"></i></li><li><i class="fa fa-star-o"></i></li>',  // 2 stars
-                  '<li><i class="fa fa-star"></i></li><li><i class="fa fa-star"></i></li><li><i class="fa fa-star"></i></li>' // 3 stars
-                 ];
+  '<li><i class="fa fa-star"></i></li><li><i class="fa fa-star"></i></li><li><i class="fa fa-star-o"></i></li>',  // 2 stars
+  '<li><i class="fa fa-star"></i></li><li><i class="fa fa-star"></i></li><li><i class="fa fa-star"></i></li>' // 3 stars
+];
 
 
 // ============================================
@@ -39,17 +39,17 @@ const showStar = ['<li><i class="fa fa-star"></i></li><li><i class="fa fa-star-o
 // ============================================
 
 function shuffle(array) {
-    var currentIndex = array.length, temporaryValue, randomIndex;
+  var currentIndex = array.length, temporaryValue, randomIndex;
 
-    while (currentIndex !== 0) {
-        randomIndex = Math.floor(Math.random() * currentIndex);
-        currentIndex -= 1;
-        temporaryValue = array[currentIndex];
-        array[currentIndex] = array[randomIndex];
-        array[randomIndex] = temporaryValue;
-    }
+  while (currentIndex !== 0) {
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
 
-    return array;
+  return array;
 }
 
 // ============================================
@@ -59,64 +59,64 @@ function shuffle(array) {
 
 
 function initGame() {
-   document.querySelector('.overlay').style.display = 'none';
-   document.querySelector('.deck').innerHTML = '';
-   shuffle(possibleCards);
-   opened = [];
-   numStars = 3;
-   numMoves = 0;
-   numMatch = 0;
-   resetTimer();
-   runTimer();
-   printStars();
-   printMoves();
+  document.querySelector('.overlay').style.display = 'none';
+  document.querySelector('.deck').innerHTML = '';
+  shuffle(possibleCards);
+  opened = [];
+  numStars = 3;
+  numMoves = 0;
+  numMatch = 0;
+  resetTimer();
+  runTimer();
+  printStars();
+  printMoves();
 
 
-   for(i=0;i<numCards;i++) {
-        document.querySelector('.deck').innerHTML += `<li class="card"><img src="img/animal/${possibleCards[i]}.svg"/></li>`;
-   };
+  for (i = 0; i < numCards; i++) {
+    document.querySelector('.deck').innerHTML += `<li class="card"><img src="img/animal/${possibleCards[i]}.svg"/></li>`;
+  };
 
 
 
-// ============================================
-// Set up event listener
-// 1. Click a card,  if it's already shown, quit function
-// 2. If it's not shown, show the card, add it to opened array. 
-// 3. If there's already an item in the opened array, check if it's match. 
-// 4. run match or unmatch function, clear opened array for the next match check.
-// 5. Calculate the stars for each move.
-// 6. If reach maximum pairs, end the game, show congrats message
-// ============================================
+  // ============================================
+  // Set up event listener
+  // 1. Click a card,  if it's already shown, quit function
+  // 2. If it's not shown, show the card, add it to opened array. 
+  // 3. If there's already an item in the opened array, check if it's match. 
+  // 4. run match or unmatch function, clear opened array for the next match check.
+  // 5. Calculate the stars for each move.
+  // 6. If reach maximum pairs, end the game, show congrats message
+  // ============================================
 
   document.querySelectorAll(".card").forEach((card) => {
     card.addEventListener("click", function () {
 
-    if (card.classList.contains('show')){
-      return; // exit function if the card is already opened.
-    }
-
-    card.classList.add('show','animated','flipInY');
-
-    let currentCard = card.innerHTML;
-    opened.push(currentCard);
-
-
-    if(opened.length > 1) {
-      if(currentCard === opened[0]) {
-        match();
-      }else {
-        unmatch();
+      if (card.classList.contains('show')) {
+        return; // exit function if the card is already opened.
       }
-    };
-    
-    starCount(); 
-    printMoves();
+
+      card.classList.add('show', 'animated', 'flipInY');
+
+      let currentCard = card.innerHTML;
+      opened.push(currentCard);
 
 
-    if(numMatch === maxMatch ) {
-      stopTimer();
-      congrats();
-    }
+      if (opened.length > 1) {
+        if (currentCard === opened[0]) {
+          match();
+        } else {
+          unmatch();
+        }
+      };
+
+      starCount();
+      printMoves();
+
+
+      if (numMatch === maxMatch) {
+        stopTimer();
+        congrats();
+      }
 
     })
   });
@@ -136,7 +136,7 @@ function match() {
   opened = [];
 
   document.querySelectorAll(".show").forEach((matchedCard) => {
-    matchedCard.classList.add('match','animated','flip')
+    matchedCard.classList.add('match', 'animated', 'flip')
     matchedCard.classList.remove('show')
   });
 
@@ -151,7 +151,7 @@ function unmatch() {
   document.querySelectorAll(".show:not(.match)").forEach((unmatchedCard) => {
     unmatchedCard.classList = 'card show unmatch animated shake';
     document.querySelectorAll('.unmatch').forEach((unmatchedCard) => {
-      setTimeout(function() {
+      setTimeout(function () {
         unmatchedCard.classList = 'animated flipInY card';
       }, 600);
     })
@@ -167,26 +167,26 @@ function unmatch() {
 
 function starCount() {
 
-  if(numMoves < 16) {
-      numStars = 3;
-    }else if (numMoves >= 16 && numMoves < 25) {
-      numStars = 2;
-    }else {
-      numStars = 1;
-    };
+  if (numMoves < 16) {
+    numStars = 3;
+  } else if (numMoves >= 16 && numMoves < 25) {
+    numStars = 2;
+  } else {
+    numStars = 1;
+  };
 
-    printStars();
+  printStars();
 };
 
 
 // print "stars", "moves", "matches" to the page
 
 function printStars() {
-  document.querySelectorAll('.stars').forEach(panel => panel.innerHTML = showStar[numStars-1])
+  document.querySelectorAll('.stars').forEach(panel => panel.innerHTML = showStar[numStars - 1])
 }
 
 
-function printMoves(){
+function printMoves() {
   document.querySelectorAll('.moves').forEach(move => move.textContent = numMoves)
 }
 
@@ -198,19 +198,19 @@ function printMoves(){
 
 
 function twoDigits(number) {
-       return (number < 10 ? '0' : '') + number;
+  return (number < 10 ? '0' : '') + number;
 }
 
 
 function timer() {
-    seconds++;
-    if (seconds >= 60) {
-        seconds = 0;
-        minutes++;
-    }
-  
-    updateTimer()
-    runTimer();
+  seconds++;
+  if (seconds >= 60) {
+    seconds = 0;
+    minutes++;
+  }
+
+  updateTimer()
+  runTimer();
 }
 
 
@@ -219,14 +219,14 @@ function runTimer() {
 }
 
 function resetTimer() {
-    stopTimer();
-    seconds = 0; minutes = 0;
-    updateTimer()
+  stopTimer();
+  seconds = 0; minutes = 0;
+  updateTimer()
 }
 
-function updateTimer(){
-    document.querySelectorAll(".timer-seconds").forEach(item=> item.textContent = twoDigits(seconds));
-    document.querySelectorAll(".timer-minutes").forEach(item=> item.textContent = twoDigits(minutes));
+function updateTimer() {
+  document.querySelectorAll(".timer-seconds").forEach(item => item.textContent = twoDigits(seconds));
+  document.querySelectorAll(".timer-minutes").forEach(item => item.textContent = twoDigits(minutes));
 }
 
 function stopTimer() {
@@ -238,8 +238,8 @@ function stopTimer() {
 // Restart
 // ============================================
 
-document.querySelectorAll('.restart').forEach(item=>
-  item.addEventListener("click", function(){
+document.querySelectorAll('.restart').forEach(item =>
+  item.addEventListener("click", function () {
     initGame();
   })
 );
@@ -249,23 +249,23 @@ document.querySelectorAll('.restart').forEach(item=>
 // ============================================
 
 
-const finishImg = ['12','11','2'];
-const finishMsg = ['Oh man... you have to be kicked out of Purgeatory','Good job, pal! but still say goodbye to Purgeatory','Geez, That\'s amazing i guess you stay in TG!'];
+const finishImg = ['12', '11', '2'];
+const finishMsg = ['Oh man... you have to be kicked out of Purgeatory', 'Good job, pal! but still say goodbye to Purgeatory', 'Geez, That\'s amazing i guess you stay in TG!'];
 
 function congrats() {
   stopTimer();
-  setTimeout(function(){
+  setTimeout(function () {
     // Switch messages and images base on number of stars 
     document.querySelector('.switch-msg').innerHTML =
-    `
-    <h2>${finishMsg[numStars-1]}</h2>
-    <img src="img/animal/${finishImg[numStars-1]}.svg" alt="" width="300">
-    `
-    document.querySelector('overlay-content').classList.add('animated','bounceIn')
-  },100);
+      `
+      <h2>${finishMsg[numStars - 1]}</h2>
+      <img src="img/animal/${finishImg[numStars - 1]}.svg" alt="" width="300">
+      `
+    document.querySelector('overlay-content').classList.add('animated', 'bounceIn')
+  }, 100);
 
-  setTimeout(function(){
+  setTimeout(function () {
     document.querySelector('.overlay').style.display = 'block'
-  },300);
+  }, 300);
 };
 
