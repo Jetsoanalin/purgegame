@@ -73,7 +73,7 @@ function initGame() {
 
 
   for (i = 0; i < numCards; i++) {
-    document.querySelector('.deck').innerHTML += `<li class="card"><img src="img/animal/${possibleCards[i]}.svg"/></li>`;
+    document.querySelector('.deck').innerHTML += `<li class="card"><img src="img/monad/${possibleCards[i]}.svg"/></li>`;
   };
 
 
@@ -259,7 +259,7 @@ function congrats() {
     document.querySelector('.switch-msg').innerHTML =
       `
       <h2>${finishMsg[numStars - 1]}</h2>
-      <img src="img/animal/${finishImg[numStars - 1]}.svg" alt="" width="300">
+      <img src="img/monad/${finishImg[numStars - 1]}.svg" alt="" width="300">
       `
     document.querySelector('overlay-content').classList.add('animated', 'bounceIn')
   }, 100);
@@ -269,3 +269,12 @@ function congrats() {
   }, 300);
 };
 
+Swal.fire({
+  title: 'Welcome to Memory Purge!',
+  text: 'Let the kings of Monad test your memory and see if you are worthy for Purgeatory !',
+  // background: "#7066e0",
+  imageUrl: 'https://i.ibb.co/zsg4bKN/monad.webp',
+  imageAlt: 'Custom image',
+  // confirmButtonColor: "#fff",
+  color: "#545454",
+})
